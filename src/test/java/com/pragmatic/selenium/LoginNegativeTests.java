@@ -50,14 +50,19 @@ public class LoginNegativeTests {
 
     }
 
+    private void assertionCheck(String cssSelector, String text){
+
+        Assert.assertEquals(driver.findElement(By.cssSelector(cssSelector)).getText(),text);
+
+    }
+
     @Test(priority = 1)
     public void test_correctUsername_correctPassword(){
 
         login("standard_user", "secret_sauce");
 
         //verify correctly login to the dashboard(check product label is available)
-        Assert.assertEquals(driver.findElement(By.cssSelector(".title")).getText(),"Products");
-
+        assertionCheck(".title", "Products");
     }
 
     @Test(priority = 2)
@@ -66,7 +71,7 @@ public class LoginNegativeTests {
         login("standard_user", "secret_sauce_invalid");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test(priority = 3)
@@ -75,7 +80,7 @@ public class LoginNegativeTests {
         login("standard_user_invalid", "secret_sauce");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test(priority = 4)
@@ -84,7 +89,7 @@ public class LoginNegativeTests {
         login("standard_user_invalid", "secret_sauce_invalid");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test(priority = 5)
@@ -93,7 +98,7 @@ public class LoginNegativeTests {
         login("", "secret_sauce");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
+        assertionCheck("h3", "Epic sadface: Username is required");
     }
 
     @Test(priority = 6)
@@ -102,7 +107,7 @@ public class LoginNegativeTests {
         login("standard_user", "");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Password is required");
+        assertionCheck("h3", "Epic sadface: Password is required");
     }
 
     @Test(priority = 7)
@@ -111,7 +116,7 @@ public class LoginNegativeTests {
         login("", "");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
+        assertionCheck("h3", "Epic sadface: Username is required");
     }
 
     @Test(priority = 8)
@@ -120,7 +125,7 @@ public class LoginNegativeTests {
         login("This is the very long user name for testing purpose", "secret_sauce");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test(priority = 9)
@@ -129,7 +134,7 @@ public class LoginNegativeTests {
         login("standard_user", "This is the very long user name for testing purpose");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test(priority = 10)
@@ -138,7 +143,7 @@ public class LoginNegativeTests {
         login("standard_user~`!@#$%^&*()_+", "' OR '1'='1'; --  ");
 
         //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+        assertionCheck("h3", "Epic sadface: Username and password do not match any user in this service");
     }
 
 }
