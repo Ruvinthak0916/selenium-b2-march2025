@@ -17,7 +17,7 @@ public class LoginNegativeTests {
     WebElement btnLogin;
 
     @BeforeTest
-    public void beforeTest(){
+    public void setUp(){
 
         //open a browser
         driver = new ChromeDriver();
@@ -32,129 +32,113 @@ public class LoginNegativeTests {
 
     }
 
-    @Test
-    public void test_correctUsername_correctPassword(){
-
-        txtUsername.sendKeys("standard_user");
-        txtPassword.sendKeys("secret_sauce");
-        btnLogin.click();
-
-        //verify correctly login to the dashboard(check product label is available)
-        Assert.assertEquals(driver.findElement(By.cssSelector(".title")).getText(),"Products");
-
-    }
-
-    @Test
-    public void test_correctUsername_invalidPassword(){
-
-        txtUsername.sendKeys("standard_user");
-        txtPassword.sendKeys("secret_sauce_invalid");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void test_invalidUsername_correctPassword(){
-
-        txtUsername.sendKeys("standard_user_invalid");
-        txtPassword.sendKeys("secret_sauce");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void test_invalidUsername_invalidPassword(){
-
-        txtUsername.sendKeys("standard_user_invalid");
-        txtPassword.sendKeys("secret_sauce_invalid");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void test_blankUsername_correctPassword(){
-
-        txtUsername.sendKeys("");
-        txtPassword.sendKeys("secret_sauce");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
-    }
-
-    @Test
-    public void test_correctUsername_blankPassword(){
-
-        txtUsername.sendKeys("standard_user");
-        txtPassword.sendKeys("");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Password is required");
-    }
-
-    @Test
-    public void test_blankUsername_blankPassword(){
-
-        txtUsername.sendKeys("");
-        txtPassword.sendKeys("");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
-    }
-
-    @Test
-    public void test_veryLongUsername_correctPassword(){
-
-        txtUsername.sendKeys("This is the very long user name for testing purpose");
-        txtPassword.sendKeys("secret_sauce");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void test_correctUsername_veryLongPassword(){
-
-        txtUsername.sendKeys("standard_user");
-        txtPassword.sendKeys("This is the very long user name for testing purpose");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-    @Test
-    public void test_specialCharacters_usernamePassword(){
-
-        txtUsername.sendKeys("standard_user~`!@#$%^&*()_+");
-        txtPassword.sendKeys("' OR '1'='1'; --  ");
-        btnLogin.click();
-
-        //verify error message
-        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
-    }
-
-
-
     @AfterTest
-    public void afterTest(){
+    public void tearDown(){
 
         //close the browser
         driver.quit();
 
     }
 
+    private void login(String username, String password){
 
+        txtUsername.clear();
+        txtPassword.clear();
+        txtUsername.sendKeys(username);
+        txtPassword.sendKeys(password);
+        btnLogin.click();
 
+    }
 
+    @Test(priority = 1)
+    public void test_correctUsername_correctPassword(){
+
+        login("standard_user", "secret_sauce");
+
+        //verify correctly login to the dashboard(check product label is available)
+        Assert.assertEquals(driver.findElement(By.cssSelector(".title")).getText(),"Products");
+
+    }
+
+    @Test(priority = 2)
+    public void test_correctUsername_invalidPassword(){
+
+        login("standard_user", "secret_sauce_invalid");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
+
+    @Test(priority = 3)
+    public void test_invalidUsername_correctPassword(){
+
+        login("standard_user_invalid", "secret_sauce");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
+
+    @Test(priority = 4)
+    public void test_invalidUsername_invalidPassword(){
+
+        login("standard_user_invalid", "secret_sauce_invalid");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
+
+    @Test(priority = 5)
+    public void test_blankUsername_correctPassword(){
+
+        login("", "secret_sauce");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
+    }
+
+    @Test(priority = 6)
+    public void test_correctUsername_blankPassword(){
+
+        login("standard_user", "");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Password is required");
+    }
+
+    @Test(priority = 7)
+    public void test_blankUsername_blankPassword(){
+
+        login("", "");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username is required");
+    }
+
+    @Test(priority = 8)
+    public void test_veryLongUsername_correctPassword(){
+
+        login("This is the very long user name for testing purpose", "secret_sauce");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
+
+    @Test(priority = 9)
+    public void test_correctUsername_veryLongPassword(){
+
+        login("standard_user", "This is the very long user name for testing purpose");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
+
+    @Test(priority = 10)
+    public void test_specialCharacters_usernamePassword(){
+
+        login("standard_user~`!@#$%^&*()_+", "' OR '1'='1'; --  ");
+
+        //verify error message
+        Assert.assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Epic sadface: Username and password do not match any user in this service");
+    }
 
 }
