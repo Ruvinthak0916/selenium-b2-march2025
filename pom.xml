@@ -12,6 +12,9 @@
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <testng.version>7.11.0</testng.version>
+        <selenium-java.version>4.29.0</selenium-java.version>
+        <datafaker.version>2.4.2</datafaker.version>
     </properties>
 
 
@@ -20,16 +23,24 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.29.0</version>
+            <version>${selenium-java.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.11.0</version>
+            <version>${testng.version}</version>
 
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.datafaker/datafaker -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
+        </dependency>
+
 
     </dependencies>
 
