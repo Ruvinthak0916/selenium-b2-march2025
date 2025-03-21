@@ -43,14 +43,14 @@ public class CheckoutProcessTest {
 
     }
 
-//    @AfterTest
-//    public void tearDown(){
-//
-//        //close the browser
-//        if(driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterTest
+    public void tearDown(){
+
+        //close the browser
+        if(driver != null) {
+            driver.quit();
+        }
+    }
 
     @Test
     public void testAddToCart(){
@@ -60,7 +60,7 @@ public class CheckoutProcessTest {
         login("standard_user", "secret_sauce");
 
         //Check correctly navigate to the product page
-        assertionCheck("//span[text()='Products']", "Products");
+        assertElementText("//span[text()='Products']", "Products");
 
         //Add products to the cart
         clickButton("add-to-cart-sauce-labs-backpack");
@@ -70,8 +70,8 @@ public class CheckoutProcessTest {
         goToTheCartPage(".shopping_cart_link");
 
         //Verify that the selected products are listed
-        assertionCheck("//div[text()='Sauce Labs Backpack']", "Sauce Labs Backpack");
-        assertionCheck("//div[text()='Sauce Labs Bike Light']", "Sauce Labs Bike Light");
+        assertElementText("//div[text()='Sauce Labs Backpack']", "Sauce Labs Backpack");
+        assertElementText("//div[text()='Sauce Labs Bike Light']", "Sauce Labs Bike Light");
 
         //Click checkout button
         clickButton("checkout");
@@ -83,15 +83,15 @@ public class CheckoutProcessTest {
         clickButton("continue");
 
         //Verify that the data is correctly populated on the checkout overview page
-        assertionCheck("//div[text() = 'Sauce Labs Backpack']", "Sauce Labs Backpack");
-        assertionCheck("//div[text()='Sauce Labs Bike Light']", "Sauce Labs Bike Light");
-        assertionCheck("//div[text()='Payment Information:']", "Payment Information:");
+        assertElementText("//div[text() = 'Sauce Labs Backpack']", "Sauce Labs Backpack");
+        assertElementText("//div[text()='Sauce Labs Bike Light']", "Sauce Labs Bike Light");
+        assertElementText("//div[text()='Payment Information:']", "Payment Information:");
 
         //click finish button
         clickButton("finish");
 
         //Verify the order confirmation message
-        assertionCheck("//h2[text()='Thank you for your order!']", "Thank you for your order!");
+        assertElementText("//h2[text()='Thank you for your order!']", "Thank you for your order!");
 
         //click back to home
         clickButton("back-to-products");
@@ -107,7 +107,7 @@ public class CheckoutProcessTest {
         clickButton("login-button");
     }
 
-    private void assertionCheck(String visibleText, String text){
+    private void assertElementText(String visibleText, String text){
 
         Assert.assertEquals(driver.findElement(By.xpath(visibleText)).getText(),text);
     }
